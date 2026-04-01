@@ -26,30 +26,31 @@ const STATUS_STEPS = [
   "Formatting per deity protocol...",
   "Opening Spiritual Socket Layer (SSL)...",
   "Routing through celestial CDN...",
+  "Bypassing free will firewall...",
   "Transmitting to divine endpoint...",
-  "Awaiting acknowledgment (this is the hard part)...",
+  "Awaiting acknowledgment...",
 ];
 
 const FINAL_STATUSES = [
   { label: "Delivered", color: "#22c55e", icon: "\u2713" },
   { label: "Pending Divine Review", color: "#f59e0b", icon: "\u23F3" },
-  { label: "Read (no reply)", color: "#8878a8", icon: "\uD83D\uDC40" },
+  { label: "Read", color: "#8878a8", icon: "\uD83D\uDC40" },
   { label: "Mysterious Ways\u2122", color: "#a855f7", icon: "?" },
-  { label: "Added to Backlog", color: "#f59e0b", icon: "\uD83D\uDCCB" },
-  { label: "Works on My Machine", color: "#22c55e", icon: "\uD83E\uDD37" },
+  { label: "Queued Behind 4.2 Billion Others", color: "#f59e0b", icon: "\uD83D\uDCCB" },
+  { label: "Acknowledged (Non-Binding)", color: "#22c55e", icon: "\uD83E\uDD37" },
 ];
 
 const TAGLINES = [
   "Because shouting into the void should at least have a nice UI",
   "Now with 40% fewer unanswered prayers (statistically unverified)",
-  "Like GPT, but for talking to someone who might actually be listening",
   "Putting the 'AI' in 'faith' since 2026",
   "For when thoughts and prayers need an API layer",
-  "Religion's first SaaS product (Sorry, Scientology)",
   "Finally, prayer with version control",
   "Enterprise-grade salvation, startup pricing",
-  "God is great. God is good. God could use a better inbox.",
   "Disrupting the prayer-industrial complex",
+  "Same prayers, better infrastructure",
+  "We can't guarantee results. Then again, neither can they.",
+  "The middleman between you and whoever's up there, if anyone",
 ];
 
 const PLACEHOLDER_TOPICS = [
@@ -61,10 +62,11 @@ const PLACEHOLDER_TOPICS = [
 ];
 
 const ERROR_MESSAGES = [
-  "Transmission failed. Divine endpoint unreachable. God might be on the other line.",
-  "Transmission failed. Server returned 403: Forbidden Fruit.",
-  "Transmission failed. Prayer timed out. Even miracles have rate limits.",
-  "Transmission failed. Spiritual bandwidth exceeded. Try again during off-peak worship hours.",
+  "Divine endpoint unreachable. Please verify your faith and try again.",
+  "Server returned 403: Forbidden Fruit.",
+  "Prayer timed out. Even miracles have rate limits.",
+  "Spiritual bandwidth exceeded. Try again during off-peak worship hours.",
+  "Connection refused. The deity you are trying to reach has not accepted your terms of service.",
 ];
 
 const labelStyle = {
@@ -396,7 +398,7 @@ export default function PrayerGPT() {
                 </div>
                 {selectedDeity.deprecated && (
                   <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
-                    Last confirmed miracle: ~400 BCE. Proceed at your own theological risk.
+                    Last known activity: ~400 BCE. Community support only. No SLA.
                   </div>
                 )}
               </div>
@@ -438,7 +440,7 @@ export default function PrayerGPT() {
 
             <span style={labelStyle}>Prayer Topics</span>
             <div style={{ fontSize: 10, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
-              One topic per line. Be specific — omniscience isn't what it used to be.
+              One topic per line. Be specific — even omniscience appreciates good documentation.
             </div>
             <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
               rows={isMobile ? 4 : 5}
@@ -467,7 +469,7 @@ export default function PrayerGPT() {
 
             {!deity && topics.trim() && (
               <div style={{ textAlign: "center", fontSize: 11, color: "#f59e0b", marginTop: 8, animation: "fadeIn 0.3s" }}>
-                You're praying to... nobody? Bold theological position, but pick a recipient.
+                You've written a prayer with no recipient. That's either nihilism or a rough draft.
               </div>
             )}
           </div>
@@ -567,7 +569,7 @@ export default function PrayerGPT() {
                   {finalStatus.icon} {finalStatus.label}
                 </span>
                 <div style={{ fontSize: 10, color: "#555", marginTop: 8, fontStyle: "italic" }}>
-                  Estimated response time: between now and the heat death of the universe
+                  Response times may vary. Historically, they have.
                 </div>
               </div>
             )}
@@ -594,7 +596,7 @@ export default function PrayerGPT() {
                 <div style={{ fontSize: 15, color: "#777", marginBottom: 4 }}>No transmissions yet</div>
                 <div style={{ fontSize: 12, color: "#555", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
                   Your prayer history will appear here.<br />
-                  Think of it as a spiritual paper trail.
+                  For your records. And possibly His.
                 </div>
               </div>
             ) : (
@@ -659,10 +661,10 @@ export default function PrayerGPT() {
         }}>
           PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
           99.9% SPIRITUAL UPTIME GUARANTEED*<br />
-          NOT RESPONSIBLE FOR ANSWERS RECEIVED VIA "MYSTERIOUS WAYS"<br />
+          NOT RESPONSIBLE FOR ANSWERS DELIVERED VIA "MYSTERIOUS WAYS"<br />
           <span style={{ color: "#584d6e", fontStyle: "italic" }}>
-            *guarantee not spiritually, legally, or existentially binding<br />
-            if god is real, we're probably in trouble for this
+            *uptime refers to server, not deity. results may vary across denominations.<br />
+            no refunds. no returns. no proof of delivery.
           </span>
         </div>
       </div>
