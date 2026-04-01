@@ -186,10 +186,10 @@ export default function PrayerGPT() {
 
       var data = await response.json();
       clearInterval(interval);
-      setStatusIdx(STATUS_STEPS.length - 1);
+      setStatusIdx(STATUS_STEPS.length);
 
       if (data.prayer) {
-        var text = data.prayer;
+        var text = data.prayer.replace(/\*\*/g, "").replace(/^#+\s/gm, "");
         setPrayerText(text);
         var idx = 0;
         var streamInterval = setInterval(function () {
