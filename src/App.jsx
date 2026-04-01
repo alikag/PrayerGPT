@@ -166,6 +166,7 @@ export default function PrayerGPT() {
 
   const transmit = async () => {
     if (!deity || !topics.trim()) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTransmitting(true);
     setStatusIdx(0);
     setPrayerText("");
@@ -501,8 +502,8 @@ export default function PrayerGPT() {
                   borderRadius: "50%",
                   animation: "spin 1s linear infinite",
                 }} />
-                <div style={{ fontSize: 11, color: "#8070a0", letterSpacing: 2 }}>
-                  ESTABLISHING DIVINE CONNECTION
+                <div style={{ fontSize: 12, color: "#8070a0", letterSpacing: 2 }}>
+                  GENERATING &amp; TRANSMITTING PRAYER
                 </div>
               </div>
             )}
@@ -556,7 +557,7 @@ export default function PrayerGPT() {
                   color: "#8878a8", marginBottom: 12,
                   display: "flex", justifyContent: "space-between",
                 }}>
-                  <span>Generated Prayer</span>
+                  <span>Your Prayer (Transmitted)</span>
                   {!transmitting && <span style={{ color: "#8070a0" }}>
                     {prayerText.split(/\s+/).length} words
                   </span>}
