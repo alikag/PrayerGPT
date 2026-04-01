@@ -10,6 +10,7 @@ const DEITIES = [
   { id: "zeus", name: "Zeus", icon: "\u26A1", protocol: "Olympian v0.1 (EOL)", greeting: "O mighty Zeus", ping: "3200ms", uptime: "12.4%", deprecated: true },
   { id: "odin", name: "Odin", icon: "\uD83E\uDE93", protocol: "Runic UDP", greeting: "Allfather", ping: "88ms", uptime: "99.1%" },
   { id: "fsm", name: "Flying Spaghetti Monster", icon: "\uD83C\uDF5D", protocol: "Pastafarian", greeting: "O Great Noodly One", ping: "al dente", uptime: "100%" },
+  { id: "lobster", name: "The Great Lobster", icon: "\uD83E\uDD9E", protocol: "Crustafarian", greeting: "O Mighty Claw", ping: "ocean deep", uptime: "420M yrs" },
   { id: "universe", name: "The Universe", icon: "\uD83C\uDF0C", protocol: "Quantum Multicast", greeting: "Dear Cosmos", ping: "\u221E", uptime: "13.8B yrs" },
   { id: "custom", name: "Custom Endpoint", icon: "\uD83D\uDD0C", protocol: "REST API", greeting: "To Whom It May Concern", ping: "???", uptime: "N/A" },
 ];
