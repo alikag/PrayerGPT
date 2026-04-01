@@ -71,7 +71,7 @@ const ERROR_MESSAGES = [
 
 const labelStyle = {
   display: "block",
-  fontSize: 10,
+  fontSize: 12,
   letterSpacing: 3,
   textTransform: "uppercase",
   color: "#8878a8",
@@ -270,7 +270,7 @@ export default function PrayerGPT() {
       <div style={{ maxWidth: 580, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
         {/* HEADER */}
-        <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeIn 0.6s ease-out" }}>
+        <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeIn 0.6s ease-out", cursor: "pointer" }} onClick={() => { if (!transmitting) reset(); }}>
           <div style={{ fontSize: isMobile ? 44 : 52, marginBottom: 8, lineHeight: 1 }}>🙏</div>
           <h1 style={{
             fontSize: isMobile ? 28 : 34, fontWeight: 400, letterSpacing: 8, textTransform: "uppercase",
@@ -278,13 +278,13 @@ export default function PrayerGPT() {
             animation: "halo 4s ease-in-out infinite",
           }}>PrayerGPT</h1>
           <div style={{
-            fontSize: isMobile ? 9 : 10, letterSpacing: 4, textTransform: "uppercase",
+            fontSize: isMobile ? 10 : 11, letterSpacing: 4, textTransform: "uppercase",
             color: "#a088c8", marginBottom: 12,
           }}>
             Divine Communication as a Service
           </div>
           <div style={{
-            fontSize: isMobile ? 12 : 13, color: "#7868a0", fontStyle: "italic",
+            fontSize: isMobile ? 13 : 14, color: "#7868a0", fontStyle: "italic",
             maxWidth: 380, margin: "0 auto 12px", lineHeight: 1.5,
             padding: "0 10px",
           }}>
@@ -293,7 +293,7 @@ export default function PrayerGPT() {
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)",
-            borderRadius: 20, padding: "4px 14px", fontSize: 10, color: "#4ade80",
+            borderRadius: 20, padding: "5px 14px", fontSize: 11, color: "#4ade80",
             letterSpacing: 1,
           }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", animation: "pulse 2s infinite" }} />
@@ -314,7 +314,7 @@ export default function PrayerGPT() {
                 color: active ? "#c8b0ff" : "#555",
                 padding: isMobile ? "10px 18px" : "8px 20px", borderRadius: 6,
                 cursor: transmitting ? "not-allowed" : "pointer",
-                fontSize: 11, letterSpacing: 2, textTransform: "uppercase", fontFamily: "inherit",
+                fontSize: 12, letterSpacing: 2, textTransform: "uppercase", fontFamily: "inherit",
                 transition: "all 0.2s",
               }}>{label}</button>
             );
@@ -351,14 +351,14 @@ export default function PrayerGPT() {
                       }}>{"\u2713"}</div>
                     )}
                     <div style={{ fontSize: isMobile ? 22 : 24, marginBottom: 4 }}>{d.icon}</div>
-                    <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                    <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
                       {d.name}
                       {d.deprecated && (
                         <span style={{ fontSize: 8, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
                       )}
                     </div>
-                    <div style={{ fontSize: 10, color: "#555", marginTop: 2 }}>{d.protocol}</div>
-                    <div style={{ fontSize: 9, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
+                    <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>{d.protocol}</div>
+                    <div style={{ fontSize: 10, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
                       <span>{d.ping}</span>
                       <span>{d.uptime}</span>
                     </div>
@@ -372,7 +372,7 @@ export default function PrayerGPT() {
               <button className="show-more-btn" onClick={() => setShowAllDeities(!showAllDeities)} style={{
                 width: "100%", marginTop: 8, marginBottom: 14, padding: "10px",
                 background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
-                borderRadius: 8, color: "#8878a8", fontSize: 11, letterSpacing: 2,
+                borderRadius: 8, color: "#8878a8", fontSize: 12, letterSpacing: 2,
                 textTransform: "uppercase", cursor: "pointer", fontFamily: "inherit",
               }}>
                 {showAllDeities ? "\u25B2 Show less" : "\u25BC " + hiddenCount + " more deities (incl. Zeus, somehow)"}
@@ -386,18 +386,18 @@ export default function PrayerGPT() {
               <div style={{
                 background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
                 borderRadius: 8, padding: "10px 14px", marginBottom: 18,
-                fontSize: 11, color: "#8878a8", animation: "fadeIn 0.3s",
+                fontSize: 12, color: "#8878a8", animation: "fadeIn 0.3s",
               }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
                   <span>Connected to <strong style={{ color: "#c8b0ff" }}>{selectedDeity.name}</strong></span>
-                  <span style={{ fontSize: 10 }}>
+                  <span style={{ fontSize: 11 }}>
                     {selectedDeity.deprecated
                       ? "\u26A0\uFE0F Deprecated. Prayers may go to /dev/null."
                       : "\u2713 " + selectedDeity.protocol}
                   </span>
                 </div>
                 {selectedDeity.deprecated && (
-                  <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
+                  <div style={{ fontSize: 11, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
                     Last known activity: ~400 BCE. Community support only. No SLA.
                   </div>
                 )}
@@ -439,7 +439,7 @@ export default function PrayerGPT() {
             </div>
 
             <span style={labelStyle}>Prayer Topics</span>
-            <div style={{ fontSize: 10, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
+            <div style={{ fontSize: 11, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
               One topic per line. Be specific — even omniscience appreciates good documentation.
             </div>
             <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
@@ -656,7 +656,7 @@ export default function PrayerGPT() {
 
         {/* FOOTER */}
         <div style={{
-          textAlign: "center", marginTop: 44, fontSize: 10, color: "#6b5f80",
+          textAlign: "center", marginTop: 44, fontSize: 11, color: "#6b5f80",
           letterSpacing: 2, lineHeight: 2.4,
         }}>
           PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
