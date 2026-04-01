@@ -132,7 +132,11 @@ export default function PrayerGPT() {
   const [error, setError] = useState(null);
   const [tagline] = useState(() => TAGLINES[Math.floor(Math.random() * TAGLINES.length)]);
   const [placeholder] = useState(() => PLACEHOLDER_TOPICS[Math.floor(Math.random() * PLACEHOLDER_TOPICS.length)]);
-  const [prayerCount, setPrayerCount] = useState(() => Math.floor(Math.random() * 900000) + 100000);
+  const [prayerCount, setPrayerCount] = useState(() => {
+    const launched = new Date("2026-01-01").getTime();
+    const elapsed = Date.now() - launched;
+    return Math.floor(elapsed / 3200) + 847293;
+  });
   const [isMobile, setIsMobile] = useState(false);
   const [showAllDeities, setShowAllDeities] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -158,7 +162,7 @@ export default function PrayerGPT() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setPrayerCount(c => c + Math.floor(Math.random() * 3) + 1), 4000);
+    const t = setInterval(() => setPrayerCount(c => c + Math.floor(Math.random() * 2) + 1), 3200);
     return () => clearInterval(t);
   }, []);
 
