@@ -7,7 +7,6 @@ export default async (req) => {
   if (!apiKey) {
     return new Response(JSON.stringify({ error: "API key not configured" }), { status: 500 });
   }
-  console.log("API key length:", apiKey.length, "starts with:", apiKey.substring(0, 10));
 
   const { deity, greeting, protocol, priority, topics } = await req.json();
 
