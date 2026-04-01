@@ -357,8 +357,8 @@ export default function PrayerGPT() {
                         <span style={{ fontSize: 9, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
                       )}
                     </div>
-                    <div style={{ fontSize: 12, color: "#555", marginTop: 2 }}>{d.protocol}</div>
-                    <div style={{ fontSize: 11, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
+                    <div style={{ fontSize: 12, color: "#8070a0", marginTop: 2 }}>{d.protocol}</div>
+                    <div style={{ fontSize: 11, color: "#706888", marginTop: 3, display: "flex", gap: 8 }}>
                       <span>{d.ping}</span>
                       <span>{d.uptime}</span>
                     </div>
@@ -439,7 +439,7 @@ export default function PrayerGPT() {
             </div>
 
             <span style={labelStyle}>Prayer Topics</span>
-            <div style={{ fontSize: 12, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
+            <div style={{ fontSize: 12, color: "#8070a0", marginBottom: 6, fontStyle: "italic" }}>
               One topic per line. Be specific — even omniscience appreciates good documentation.
             </div>
             <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
@@ -487,7 +487,7 @@ export default function PrayerGPT() {
                   borderRadius: "50%",
                   animation: "spin 1s linear infinite",
                 }} />
-                <div style={{ fontSize: 11, color: "#555", letterSpacing: 2 }}>
+                <div style={{ fontSize: 11, color: "#8070a0", letterSpacing: 2 }}>
                   ESTABLISHING DIVINE CONNECTION
                 </div>
               </div>
@@ -512,7 +512,7 @@ export default function PrayerGPT() {
                     }} />
                     <div style={{
                       fontSize: isMobile ? 13 : 14,
-                      color: i < statusIdx ? "#6bc97a" : i === statusIdx ? "#c8b0ff" : "#333",
+                      color: i < statusIdx ? "#6bc97a" : i === statusIdx ? "#c8b0ff" : "#504868",
                       transition: "color 0.3s",
                     }}>{s}</div>
                   </div>
@@ -543,7 +543,7 @@ export default function PrayerGPT() {
                   display: "flex", justifyContent: "space-between",
                 }}>
                   <span>Generated Prayer</span>
-                  {!transmitting && <span style={{ color: "#555" }}>
+                  {!transmitting && <span style={{ color: "#8070a0" }}>
                     {prayerText.split(/\s+/).length} words
                   </span>}
                 </div>
@@ -568,7 +568,7 @@ export default function PrayerGPT() {
                 }}>
                   {finalStatus.icon} {finalStatus.label}
                 </span>
-                <div style={{ fontSize: 12, color: "#555", marginTop: 8, fontStyle: "italic" }}>
+                <div style={{ fontSize: 12, color: "#8070a0", marginTop: 8, fontStyle: "italic" }}>
                   Response times may vary. Historically, they have.
                 </div>
               </div>
@@ -591,10 +591,10 @@ export default function PrayerGPT() {
         {screen === "log" && (
           <div style={{ animation: "fadeIn 0.4s ease-out" }}>
             {prayerLog.length === 0 ? (
-              <div style={{ textAlign: "center", padding: isMobile ? 30 : 40, color: "#555" }}>
+              <div style={{ textAlign: "center", padding: isMobile ? 30 : 40, color: "#8070a0" }}>
                 <div style={{ fontSize: 44, marginBottom: 14 }}>📡</div>
                 <div style={{ fontSize: 16, color: "#777", marginBottom: 4 }}>No transmissions yet</div>
-                <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
+                <div style={{ fontSize: 13, color: "#8070a0", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
                   Your prayer history will appear here.<br />
                   For your records. And possibly His.
                 </div>
@@ -602,7 +602,7 @@ export default function PrayerGPT() {
             ) : (
               <>
                 <div style={{
-                  fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase",
+                  fontSize: 11, color: "#8070a0", letterSpacing: 2, textTransform: "uppercase",
                   marginBottom: 14, textAlign: "center",
                 }}>
                   {prayerLog.length} prayer{prayerLog.length !== 1 ? "s" : ""} transmitted — {prayerLog.filter(l => l.status.label === "Delivered" || l.status.label === "Acknowledged").length} confirmed received
@@ -622,7 +622,7 @@ export default function PrayerGPT() {
                           <span style={{ fontSize: 22 }}>{log.icon}</span>
                           <div>
                             <div style={{ fontSize: 15, fontWeight: 600, color: "#d4c8ee" }}>{log.deity}</div>
-                            <div style={{ fontSize: 11, color: "#555" }}>{log.time}</div>
+                            <div style={{ fontSize: 11, color: "#8070a0" }}>{log.time}</div>
                           </div>
                         </div>
                         <div style={{
@@ -632,8 +632,8 @@ export default function PrayerGPT() {
                           borderRadius: 14, padding: "4px 12px", fontSize: 12, color: log.status.color,
                         }}>{log.status.icon} {log.status.label}</div>
                       </div>
-                      <div style={{ fontSize: 11, color: "#666", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Topics</div>
-                      <div style={{ fontSize: 13, color: "#888", marginBottom: 10, whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{log.topics}</div>
+                      <div style={{ fontSize: 11, color: "#8878a8", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Topics</div>
+                      <div style={{ fontSize: 13, color: "#9990b0", marginBottom: 10, whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{log.topics}</div>
                       <details>
                         <summary style={{ fontSize: 12, color: "#8878a8", letterSpacing: 1, textTransform: "uppercase", cursor: "pointer", padding: "4px 0" }}>
                           View Full Prayer
