@@ -71,7 +71,7 @@ const ERROR_MESSAGES = [
 
 const labelStyle = {
   display: "block",
-  fontSize: 12,
+  fontSize: 13,
   letterSpacing: 3,
   textTransform: "uppercase",
   color: "#8878a8",
@@ -278,13 +278,13 @@ export default function PrayerGPT() {
             animation: "halo 4s ease-in-out infinite",
           }}>PrayerGPT</h1>
           <div style={{
-            fontSize: isMobile ? 10 : 11, letterSpacing: 4, textTransform: "uppercase",
+            fontSize: isMobile ? 11 : 12, letterSpacing: 4, textTransform: "uppercase",
             color: "#a088c8", marginBottom: 12,
           }}>
             Divine Communication as a Service
           </div>
           <div style={{
-            fontSize: isMobile ? 13 : 14, color: "#7868a0", fontStyle: "italic",
+            fontSize: isMobile ? 14 : 15, color: "#7868a0", fontStyle: "italic",
             maxWidth: 380, margin: "0 auto 12px", lineHeight: 1.5,
             padding: "0 10px",
           }}>
@@ -293,7 +293,7 @@ export default function PrayerGPT() {
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)",
-            borderRadius: 20, padding: "5px 14px", fontSize: 11, color: "#4ade80",
+            borderRadius: 20, padding: "5px 14px", fontSize: 12, color: "#4ade80",
             letterSpacing: 1,
           }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", animation: "pulse 2s infinite" }} />
@@ -314,7 +314,7 @@ export default function PrayerGPT() {
                 color: active ? "#c8b0ff" : "#555",
                 padding: isMobile ? "10px 18px" : "8px 20px", borderRadius: 6,
                 cursor: transmitting ? "not-allowed" : "pointer",
-                fontSize: 12, letterSpacing: 2, textTransform: "uppercase", fontFamily: "inherit",
+                fontSize: 13, letterSpacing: 2, textTransform: "uppercase", fontFamily: "inherit",
                 transition: "all 0.2s",
               }}>{label}</button>
             );
@@ -351,14 +351,14 @@ export default function PrayerGPT() {
                       }}>{"\u2713"}</div>
                     )}
                     <div style={{ fontSize: isMobile ? 22 : 24, marginBottom: 4 }}>{d.icon}</div>
-                    <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 600, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                    <div style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
                       {d.name}
                       {d.deprecated && (
-                        <span style={{ fontSize: 8, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
+                        <span style={{ fontSize: 9, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
                       )}
                     </div>
-                    <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>{d.protocol}</div>
-                    <div style={{ fontSize: 10, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
+                    <div style={{ fontSize: 12, color: "#555", marginTop: 2 }}>{d.protocol}</div>
+                    <div style={{ fontSize: 11, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
                       <span>{d.ping}</span>
                       <span>{d.uptime}</span>
                     </div>
@@ -372,7 +372,7 @@ export default function PrayerGPT() {
               <button className="show-more-btn" onClick={() => setShowAllDeities(!showAllDeities)} style={{
                 width: "100%", marginTop: 8, marginBottom: 14, padding: "10px",
                 background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
-                borderRadius: 8, color: "#8878a8", fontSize: 12, letterSpacing: 2,
+                borderRadius: 8, color: "#8878a8", fontSize: 13, letterSpacing: 2,
                 textTransform: "uppercase", cursor: "pointer", fontFamily: "inherit",
               }}>
                 {showAllDeities ? "\u25B2 Show less" : "\u25BC " + hiddenCount + " more deities (incl. Zeus, somehow)"}
@@ -386,18 +386,18 @@ export default function PrayerGPT() {
               <div style={{
                 background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
                 borderRadius: 8, padding: "10px 14px", marginBottom: 18,
-                fontSize: 12, color: "#8878a8", animation: "fadeIn 0.3s",
+                fontSize: 13, color: "#8878a8", animation: "fadeIn 0.3s",
               }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
                   <span>Connected to <strong style={{ color: "#c8b0ff" }}>{selectedDeity.name}</strong></span>
-                  <span style={{ fontSize: 11 }}>
+                  <span style={{ fontSize: 12 }}>
                     {selectedDeity.deprecated
                       ? "\u26A0\uFE0F Deprecated. Prayers may go to /dev/null."
                       : "\u2713 " + selectedDeity.protocol}
                   </span>
                 </div>
                 {selectedDeity.deprecated && (
-                  <div style={{ fontSize: 11, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
+                  <div style={{ fontSize: 12, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
                     Last known activity: ~400 BCE. Community support only. No SLA.
                   </div>
                 )}
@@ -430,8 +430,8 @@ export default function PrayerGPT() {
                   }}>
                     <div style={{ fontSize: 18, marginBottom: isMobile ? 0 : 4, flexShrink: 0 }}>{p.icon}</div>
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 600 }}>{p.label}</div>
-                      <div style={{ fontSize: 10, marginTop: 2, opacity: 0.7, lineHeight: 1.3 }}>{p.desc}</div>
+                      <div style={{ fontSize: 14, fontWeight: 600 }}>{p.label}</div>
+                      <div style={{ fontSize: 12, marginTop: 2, opacity: 0.7, lineHeight: 1.3 }}>{p.desc}</div>
                     </div>
                   </button>
                 );
@@ -439,7 +439,7 @@ export default function PrayerGPT() {
             </div>
 
             <span style={labelStyle}>Prayer Topics</span>
-            <div style={{ fontSize: 11, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
+            <div style={{ fontSize: 12, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
               One topic per line. Be specific — even omniscience appreciates good documentation.
             </div>
             <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
@@ -468,7 +468,7 @@ export default function PrayerGPT() {
             )}
 
             {!deity && topics.trim() && (
-              <div style={{ textAlign: "center", fontSize: 11, color: "#f59e0b", marginTop: 8, animation: "fadeIn 0.3s" }}>
+              <div style={{ textAlign: "center", fontSize: 12, color: "#f59e0b", marginTop: 8, animation: "fadeIn 0.3s" }}>
                 You've written a prayer with no recipient. That's either nihilism or a rough draft.
               </div>
             )}
@@ -487,7 +487,7 @@ export default function PrayerGPT() {
                   borderRadius: "50%",
                   animation: "spin 1s linear infinite",
                 }} />
-                <div style={{ fontSize: 10, color: "#555", letterSpacing: 2 }}>
+                <div style={{ fontSize: 11, color: "#555", letterSpacing: 2 }}>
                   ESTABLISHING DIVINE CONNECTION
                 </div>
               </div>
@@ -511,7 +511,7 @@ export default function PrayerGPT() {
                       transition: "background 0.3s",
                     }} />
                     <div style={{
-                      fontSize: isMobile ? 12 : 13,
+                      fontSize: isMobile ? 13 : 14,
                       color: i < statusIdx ? "#6bc97a" : i === statusIdx ? "#c8b0ff" : "#333",
                       transition: "color 0.3s",
                     }}>{s}</div>
@@ -524,7 +524,7 @@ export default function PrayerGPT() {
               <div style={{
                 background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)",
                 borderRadius: 10, padding: 16, marginBottom: 20, color: "#f87171",
-                fontSize: 13, lineHeight: 1.6, animation: "fadeIn 0.3s",
+                fontSize: 14, lineHeight: 1.6, animation: "fadeIn 0.3s",
               }}>
                 <div style={{ fontWeight: 700, marginBottom: 6 }}>Transmission Error</div>
                 {error}
@@ -538,7 +538,7 @@ export default function PrayerGPT() {
                 animation: "fadeIn 0.5s",
               }}>
                 <div style={{
-                  fontSize: 10, letterSpacing: 3, textTransform: "uppercase",
+                  fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
                   color: "#8878a8", marginBottom: 12,
                   display: "flex", justifyContent: "space-between",
                 }}>
@@ -548,7 +548,7 @@ export default function PrayerGPT() {
                   </span>}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#d4c8ee",
+                  fontSize: isMobile ? 15 : 16, lineHeight: 1.9, color: "#d4c8ee",
                   whiteSpace: "pre-wrap",
                 }}>
                   {displayText}
@@ -563,12 +563,12 @@ export default function PrayerGPT() {
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: finalStatus.color + "15",
                   border: "1px solid " + finalStatus.color + "33",
-                  borderRadius: 20, padding: "10px 22px", fontSize: 13,
+                  borderRadius: 20, padding: "10px 22px", fontSize: 14,
                   color: finalStatus.color, fontWeight: 600, letterSpacing: 1,
                 }}>
                   {finalStatus.icon} {finalStatus.label}
                 </span>
-                <div style={{ fontSize: 10, color: "#555", marginTop: 8, fontStyle: "italic" }}>
+                <div style={{ fontSize: 12, color: "#555", marginTop: 8, fontStyle: "italic" }}>
                   Response times may vary. Historically, they have.
                 </div>
               </div>
@@ -579,7 +579,7 @@ export default function PrayerGPT() {
                 <button className="transmit-btn" onClick={reset} style={{
                   background: "rgba(168,130,255,0.1)", border: "1px solid rgba(168,130,255,0.25)",
                   borderRadius: 10, padding: isMobile ? "14px 36px" : "12px 32px", color: "#c8b0ff",
-                  fontSize: 12, letterSpacing: 2, textTransform: "uppercase",
+                  fontSize: 13, letterSpacing: 2, textTransform: "uppercase",
                   cursor: "pointer", fontFamily: "inherit",
                 }}>New Prayer</button>
               </div>
@@ -593,8 +593,8 @@ export default function PrayerGPT() {
             {prayerLog.length === 0 ? (
               <div style={{ textAlign: "center", padding: isMobile ? 30 : 40, color: "#555" }}>
                 <div style={{ fontSize: 44, marginBottom: 14 }}>📡</div>
-                <div style={{ fontSize: 15, color: "#777", marginBottom: 4 }}>No transmissions yet</div>
-                <div style={{ fontSize: 12, color: "#555", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
+                <div style={{ fontSize: 16, color: "#777", marginBottom: 4 }}>No transmissions yet</div>
+                <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
                   Your prayer history will appear here.<br />
                   For your records. And possibly His.
                 </div>
@@ -602,7 +602,7 @@ export default function PrayerGPT() {
             ) : (
               <>
                 <div style={{
-                  fontSize: 10, color: "#555", letterSpacing: 2, textTransform: "uppercase",
+                  fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase",
                   marginBottom: 14, textAlign: "center",
                 }}>
                   {prayerLog.length} prayer{prayerLog.length !== 1 ? "s" : ""} transmitted — {prayerLog.filter(l => l.status.label === "Delivered" || l.status.label === "Acknowledged").length} confirmed received
@@ -621,25 +621,25 @@ export default function PrayerGPT() {
                         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                           <span style={{ fontSize: 22 }}>{log.icon}</span>
                           <div>
-                            <div style={{ fontSize: 14, fontWeight: 600, color: "#d4c8ee" }}>{log.deity}</div>
-                            <div style={{ fontSize: 10, color: "#555" }}>{log.time}</div>
+                            <div style={{ fontSize: 15, fontWeight: 600, color: "#d4c8ee" }}>{log.deity}</div>
+                            <div style={{ fontSize: 11, color: "#555" }}>{log.time}</div>
                           </div>
                         </div>
                         <div style={{
                           display: "inline-flex", alignItems: "center", gap: 5,
                           background: log.status.color + "12",
                           border: "1px solid " + log.status.color + "28",
-                          borderRadius: 14, padding: "4px 12px", fontSize: 11, color: log.status.color,
+                          borderRadius: 14, padding: "4px 12px", fontSize: 12, color: log.status.color,
                         }}>{log.status.icon} {log.status.label}</div>
                       </div>
-                      <div style={{ fontSize: 10, color: "#666", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Topics</div>
-                      <div style={{ fontSize: 12, color: "#888", marginBottom: 10, whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{log.topics}</div>
+                      <div style={{ fontSize: 11, color: "#666", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Topics</div>
+                      <div style={{ fontSize: 13, color: "#888", marginBottom: 10, whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{log.topics}</div>
                       <details>
-                        <summary style={{ fontSize: 11, color: "#8878a8", letterSpacing: 1, textTransform: "uppercase", cursor: "pointer", padding: "4px 0" }}>
+                        <summary style={{ fontSize: 12, color: "#8878a8", letterSpacing: 1, textTransform: "uppercase", cursor: "pointer", padding: "4px 0" }}>
                           View Full Prayer
                         </summary>
                         <div style={{
-                          fontSize: 13, lineHeight: 1.8, color: "#b8a8d8", marginTop: 10,
+                          fontSize: 14, lineHeight: 1.8, color: "#b8a8d8", marginTop: 10,
                           whiteSpace: "pre-wrap", padding: "12px", background: "rgba(168,130,255,0.04)",
                           borderRadius: 8,
                         }}>
@@ -656,7 +656,7 @@ export default function PrayerGPT() {
 
         {/* FOOTER */}
         <div style={{
-          textAlign: "center", marginTop: 44, fontSize: 11, color: "#6b5f80",
+          textAlign: "center", marginTop: 44, fontSize: 12, color: "#6b5f80",
           letterSpacing: 2, lineHeight: 2.4,
         }}>
           PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
