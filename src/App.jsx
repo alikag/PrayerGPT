@@ -134,6 +134,20 @@ export default function PrayerGPT() {
   const [prayerCount, setPrayerCount] = useState(() => Math.floor(Math.random() * 900000) + 100000);
   const [isMobile, setIsMobile] = useState(false);
   const [showAllDeities, setShowAllDeities] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const sharePrayer = async (text, deityName) => {
+    const shareText = text + "\n\n— Transmitted via PrayerGPT\nprayergpt.netlify.app";
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Prayer to " + deityName, text: shareText });
+      } catch (e) { /* user cancelled */ }
+    } else {
+      await navigator.clipboard.writeText(shareText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 520);
@@ -575,10 +589,18 @@ export default function PrayerGPT() {
             )}
 
             {!transmitting && (prayerText || error) && (
-              <div style={{ textAlign: "center", animation: "fadeIn 0.5s" }}>
+              <div style={{ display: "flex", justifyContent: "center", gap: 10, animation: "fadeIn 0.5s" }}>
+                {prayerText && (
+                  <button className="transmit-btn" onClick={() => sharePrayer(prayerText, selectedDeity ? selectedDeity.name : "Unknown")} style={{
+                    background: "rgba(168,130,255,0.1)", border: "1px solid rgba(168,130,255,0.25)",
+                    borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff",
+                    fontSize: 13, letterSpacing: 2, textTransform: "uppercase",
+                    cursor: "pointer", fontFamily: "inherit",
+                  }}>{copied ? "\u2713 Copied" : "\uD83D\uDCE4 Share"}</button>
+                )}
                 <button className="transmit-btn" onClick={reset} style={{
                   background: "rgba(168,130,255,0.1)", border: "1px solid rgba(168,130,255,0.25)",
-                  borderRadius: 10, padding: isMobile ? "14px 36px" : "12px 32px", color: "#c8b0ff",
+                  borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff",
                   fontSize: 13, letterSpacing: 2, textTransform: "uppercase",
                   cursor: "pointer", fontFamily: "inherit",
                 }}>New Prayer</button>
@@ -645,6 +667,13 @@ export default function PrayerGPT() {
                         }}>
                           {log.prayer}
                         </div>
+                        <button className="transmit-btn" onClick={() => sharePrayer(log.prayer, log.deity)} style={{
+                          marginTop: 10, background: "rgba(168,130,255,0.08)",
+                          border: "1px solid rgba(168,130,255,0.2)", borderRadius: 8,
+                          padding: "8px 16px", color: "#8878a8", fontSize: 11,
+                          letterSpacing: 2, textTransform: "uppercase",
+                          cursor: "pointer", fontFamily: "inherit",
+                        }}>{"\uD83D\uDCE4"} Share Prayer</button>
                       </details>
                     </div>
                   );
