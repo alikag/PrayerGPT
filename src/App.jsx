@@ -172,6 +172,7 @@ export default function PrayerGPT() {
   const transmit = async () => {
     if (!deity || !topics.trim()) return;
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (navigator.vibrate) navigator.vibrate(50);
     setTransmitting(true);
     setStatusIdx(0);
     setPrayerText("");
@@ -242,6 +243,7 @@ export default function PrayerGPT() {
   };
 
   var reset = function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setScreen("home");
     setTopics("");
     setPrayerText("");
@@ -273,6 +275,7 @@ export default function PrayerGPT() {
         @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         @keyframes halo { 0%,100%{text-shadow:0 0 30px rgba(168,130,255,0.4)} 50%{text-shadow:0 0 60px rgba(168,130,255,0.7), 0 0 90px rgba(168,130,255,0.3)} }
+        @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
         textarea:focus,input:focus{outline:none;border-color:#a882ff !important}
         .deity-btn{transition:all 0.2s}
         .deity-btn:hover{transform:translateY(-2px)}
@@ -290,7 +293,7 @@ export default function PrayerGPT() {
       <div style={{ maxWidth: 580, margin: "0 auto", position: "relative", zIndex: 1 }}>
 
         {/* HEADER */}
-        <div style={{ textAlign: "center", marginBottom: 32, animation: "fadeIn 0.6s ease-out", cursor: "pointer" }} onClick={() => { if (!transmitting) reset(); }}>
+        <header style={{ textAlign: "center", marginBottom: 32, animation: "fadeIn 0.6s ease-out", cursor: "pointer" }} onClick={() => { if (!transmitting) reset(); }}>
           <div style={{ fontSize: isMobile ? 44 : 52, marginBottom: 8, lineHeight: 1 }}>🙏</div>
           <h1 style={{
             fontSize: isMobile ? 28 : 34, fontWeight: 400, letterSpacing: 8, textTransform: "uppercase",
@@ -319,10 +322,10 @@ export default function PrayerGPT() {
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", animation: "pulse 2s infinite" }} />
             {prayerCount.toLocaleString()} prayers transmitted
           </div>
-        </div>
+        </header>
 
         {/* NAV */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 28 }}>
+        <nav aria-label="Main navigation" style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 28 }}>
           {[["home", "Transmit"], ["log", "Log (" + prayerLog.length + ")"]].map(function (item) {
             var key = item[0];
             var label = item[1];
@@ -332,20 +335,21 @@ export default function PrayerGPT() {
                 background: active ? "rgba(168,130,255,0.15)" : "transparent",
                 border: "1px solid " + (active ? "rgba(168,130,255,0.3)" : "rgba(255,255,255,0.08)"),
                 color: active ? "#c8b0ff" : "#555",
-                padding: isMobile ? "10px 18px" : "8px 20px", borderRadius: 6,
+                padding: isMobile ? "12px 22px" : "10px 22px", borderRadius: 6, minHeight: 48,
                 cursor: transmitting ? "not-allowed" : "pointer",
                 fontSize: 13, letterSpacing: 2, textTransform: "uppercase", fontFamily: "inherit",
                 transition: "all 0.2s",
-              }}>{label}</button>
+              }} aria-label={label}>{label}</button>
             );
           })}
-        </div>
+        </nav>
 
+        <main>
         {/* HOME */}
         {screen === "home" && (
           <div style={{ animation: "fadeIn 0.4s ease-out" }}>
             <span style={labelStyle}>Select Divine Endpoint</span>
-            <div style={{
+            <div role="radiogroup" aria-label="Select divine endpoint" style={{
               display: "grid",
               gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr",
               gap: 8,
@@ -354,7 +358,7 @@ export default function PrayerGPT() {
               {visibleDeities.map(function (d) {
                 var isSelected = deity === d.id;
                 return (
-                  <button key={d.id} className={"deity-btn" + (isSelected ? " selected" : "")} onClick={function () { setDeity(d.id); }} style={{
+                  <button key={d.id} role="radio" aria-checked={isSelected} aria-label={d.name} className={"deity-btn" + (isSelected ? " selected" : "")} onClick={function () { if (navigator.vibrate) navigator.vibrate(30); setDeity(d.id); }} style={{
                     background: isSelected ? "rgba(168,130,255,0.15)" : "rgba(255,255,255,0.03)",
                     border: "1px solid " + (isSelected ? "#a855f7" : "rgba(255,255,255,0.06)"),
                     borderRadius: 10, padding: isMobile ? "10px" : "12px 14px", textAlign: "left", cursor: "pointer",
@@ -404,9 +408,14 @@ export default function PrayerGPT() {
             {/* Selected deity info bar */}
             {selectedDeity && (
               <div style={{
-                background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
-                borderRadius: 8, padding: "10px 14px", marginBottom: 18,
+                background: "rgba(168,130,255,0.08)", border: "1px solid rgba(168,130,255,0.15)",
+                borderRadius: isMobile ? 0 : 8, padding: "12px 14px", marginBottom: 18,
                 fontSize: 13, color: "#8878a8", animation: "fadeIn 0.3s",
+                position: isMobile ? "sticky" : "static", top: 0, zIndex: 5,
+                backdropFilter: isMobile ? "blur(12px)" : "none",
+                WebkitBackdropFilter: isMobile ? "blur(12px)" : "none",
+                marginLeft: isMobile ? -12 : 0, marginRight: isMobile ? -12 : 0,
+                paddingLeft: isMobile ? 16 : 14, paddingRight: isMobile ? 16 : 14,
               }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
                   <span>Connected to <strong style={{ color: "#c8b0ff" }}>{selectedDeity.name}</strong></span>
@@ -462,8 +471,8 @@ export default function PrayerGPT() {
             <div style={{ fontSize: 12, color: "#8070a0", marginBottom: 6, fontStyle: "italic" }}>
               One topic per line. Be specific — even omniscience appreciates good documentation.
             </div>
-            <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
-              rows={isMobile ? 4 : 5}
+            <textarea value={topics} onChange={function (e) { setTopics(e.target.value); e.target.style.height = "auto"; e.target.style.height = Math.max(isMobile ? 160 : 140, e.target.scrollHeight) + "px"; }}
+              rows={isMobile ? 5 : 5}
               placeholder={placeholder}
               style={{
                 width: "100%", background: "rgba(255,255,255,0.04)",
@@ -513,7 +522,7 @@ export default function PrayerGPT() {
               </div>
             )}
 
-            <div style={{
+            <div role="status" aria-live="polite" aria-label="Transmission progress" style={{
               background: "rgba(255,255,255,0.02)", borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.05)",
               padding: isMobile ? "14px" : "18px", marginBottom: 24,
@@ -551,6 +560,26 @@ export default function PrayerGPT() {
               </div>
             )}
 
+            {transmitting && !displayText && (
+              <div style={{
+                background: "rgba(168,130,255,0.05)", border: "1px solid rgba(168,130,255,0.12)",
+                borderRadius: 14, padding: isMobile ? "16px 14px" : "20px 18px", marginBottom: 20,
+                animation: "fadeIn 0.5s",
+              }}>
+                <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#8878a8", marginBottom: 14 }}>
+                  Composing Prayer...
+                </div>
+                {[100, 85, 92, 60].map((w, i) => (
+                  <div key={i} style={{
+                    height: 14, borderRadius: 6, marginBottom: 10, width: w + "%",
+                    background: "linear-gradient(90deg, rgba(168,130,255,0.06) 0%, rgba(168,130,255,0.12) 50%, rgba(168,130,255,0.06) 100%)",
+                    backgroundSize: "800px 14px",
+                    animation: "shimmer 1.8s linear infinite",
+                  }} />
+                ))}
+              </div>
+            )}
+
             {displayText && (
               <div style={{
                 background: "rgba(168,130,255,0.05)", border: "1px solid rgba(168,130,255,0.12)",
@@ -579,16 +608,19 @@ export default function PrayerGPT() {
 
             {finalStatus && (
               <div style={{ textAlign: "center", marginBottom: 20, animation: "slideUp 0.4s ease-out" }}>
+                <div style={{ fontSize: 11, color: "#706888", letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>
+                  Transmission Status
+                </div>
                 <span style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
-                  background: finalStatus.color + "15",
-                  border: "1px solid " + finalStatus.color + "33",
-                  borderRadius: 20, padding: "10px 22px", fontSize: 14,
+                  background: finalStatus.color + "18",
+                  border: "1px solid " + finalStatus.color + "40",
+                  borderRadius: 20, padding: "12px 24px", fontSize: 15,
                   color: finalStatus.color, fontWeight: 600, letterSpacing: 1,
                 }}>
                   {finalStatus.icon} {finalStatus.label}
                 </span>
-                <div style={{ fontSize: 12, color: "#8070a0", marginTop: 8, fontStyle: "italic" }}>
+                <div style={{ fontSize: 13, color: "#8070a0", marginTop: 10, fontStyle: "italic" }}>
                   Response times may vary. Historically, they have.
                 </div>
               </div>
@@ -599,14 +631,14 @@ export default function PrayerGPT() {
                 {prayerText && (
                   <button className="transmit-btn" onClick={() => sharePrayer(prayerText, selectedDeity ? selectedDeity.name : "Unknown")} style={{
                     background: "rgba(168,130,255,0.1)", border: "1px solid rgba(168,130,255,0.25)",
-                    borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff",
+                    borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff", minHeight: 48,
                     fontSize: 13, letterSpacing: 2, textTransform: "uppercase",
                     cursor: "pointer", fontFamily: "inherit",
                   }}>{copied ? "\u2713 Copied" : "\uD83D\uDCE4 Share"}</button>
                 )}
                 <button className="transmit-btn" onClick={reset} style={{
                   background: "rgba(168,130,255,0.1)", border: "1px solid rgba(168,130,255,0.25)",
-                  borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff",
+                  borderRadius: 10, padding: isMobile ? "14px 28px" : "12px 28px", color: "#c8b0ff", minHeight: 48,
                   fontSize: 13, letterSpacing: 2, textTransform: "uppercase",
                   cursor: "pointer", fontFamily: "inherit",
                 }}>New Prayer</button>
@@ -689,19 +721,23 @@ export default function PrayerGPT() {
           </div>
         )}
 
+        </main>
+
         {/* FOOTER */}
-        <div style={{
-          textAlign: "center", marginTop: 44, fontSize: 12, color: "#6b5f80",
-          letterSpacing: 2, lineHeight: 2.4,
+        <footer style={{
+          textAlign: "center", marginTop: 44, padding: "20px 10px",
+          borderTop: "1px solid rgba(168,130,255,0.08)",
         }}>
-          PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
-          99.9% SPIRITUAL UPTIME GUARANTEED*<br />
-          NOT RESPONSIBLE FOR ANSWERS DELIVERED VIA "MYSTERIOUS WAYS"<br />
-          <span style={{ color: "#584d6e", fontStyle: "italic" }}>
+          <div style={{ fontSize: 13, color: "#8878a8", letterSpacing: 2, lineHeight: 2.2 }}>
+            PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
+            99.9% SPIRITUAL UPTIME GUARANTEED*<br />
+            NOT RESPONSIBLE FOR ANSWERS DELIVERED VIA "MYSTERIOUS WAYS"
+          </div>
+          <div style={{ fontSize: 13, color: "#7868a0", fontStyle: "italic", marginTop: 8, lineHeight: 1.8 }}>
             *uptime refers to server, not deity. results may vary across denominations.<br />
             no refunds. no returns. no proof of delivery.
-          </span>
-        </div>
+          </div>
+        </footer>
       </div>
 
       {/* MOBILE STICKY TRANSMIT BUTTON */}
