@@ -3,10 +3,11 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = (process.env.ANTHROPIC_API_KEY || "").trim();
   if (!apiKey) {
     return new Response(JSON.stringify({ error: "API key not configured" }), { status: 500 });
   }
+  console.log("API key length:", apiKey.length, "starts with:", apiKey.substring(0, 10));
 
   const { deity, greeting, protocol, priority, topics } = await req.json();
 
