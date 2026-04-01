@@ -53,11 +53,11 @@ const TAGLINES = [
 ];
 
 const PLACEHOLDER_TOPICS = [
-  "Please make my code compile\nI mass-replied-all again\nMy crypto portfolio\nGeneral existential dread\nThat thing I said in 2014",
-  "Need a mass miracle (bulk discount?)\nWifi won't reach the bathroom\nStudent loans from 2009\nIs mercury in retrograde or am I just bad at decisions",
-  "Make my landlord chill\nI googled my symptoms again\nPlease don't let the check engine light be serious\nI need a sign (a literal one, not metaphorical)",
-  "Career guidance (LinkedIn isn't cutting it)\nMy houseplant is dying (again)\nHelp me parallel park\nI accidentally liked a 3-year-old Instagram post",
-  "Please let there be leftovers\nMy in-laws are visiting\nI need the strength to not check my phone\nThe audacity of Mondays",
+  "Please make my code compile\nI mass-replied-all again\nMy crypto portfolio\nGeneral existential dread",
+  "Need a mass miracle (bulk discount?)\nWifi won't reach the bathroom\nStudent loans from 2009",
+  "Make my landlord chill\nI googled my symptoms again\nPlease don't let the check engine light be serious",
+  "Career guidance (LinkedIn isn't cutting it)\nMy houseplant is dying (again)\nHelp me parallel park",
+  "Please let there be leftovers\nMy in-laws are visiting\nThe audacity of Mondays",
 ];
 
 const ERROR_MESSAGES = [
@@ -131,6 +131,7 @@ export default function PrayerGPT() {
   const [placeholder] = useState(() => PLACEHOLDER_TOPICS[Math.floor(Math.random() * PLACEHOLDER_TOPICS.length)]);
   const [prayerCount, setPrayerCount] = useState(() => Math.floor(Math.random() * 900000) + 100000);
   const [isMobile, setIsMobile] = useState(false);
+  const [showAllDeities, setShowAllDeities] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 520);
@@ -143,6 +144,9 @@ export default function PrayerGPT() {
     const t = setInterval(() => setPrayerCount(c => c + Math.floor(Math.random() * 3) + 1), 4000);
     return () => clearInterval(t);
   }, []);
+
+  const visibleDeities = (isMobile && !showAllDeities) ? DEITIES.slice(0, 6) : DEITIES;
+  const hiddenCount = DEITIES.length - 6;
 
   const transmit = async () => {
     if (!deity || !topics.trim()) return;
@@ -227,6 +231,7 @@ export default function PrayerGPT() {
   };
 
   const selectedDeity = deity ? DEITIES.find(d => d.id === deity) : null;
+  const canTransmit = deity && topics.trim();
 
   return (
     <div style={{
@@ -234,7 +239,7 @@ export default function PrayerGPT() {
       background: "linear-gradient(180deg, #1a1040 0%, #0d0820 30%, #0c0a18 60%)",
       color: "#e8e0f8",
       fontFamily: "Georgia, 'Times New Roman', serif",
-      padding: isMobile ? "16px 12px 60px" : "24px 16px 60px",
+      padding: isMobile ? "16px 12px 100px" : "24px 16px 60px",
       position: "relative",
     }}>
       <Stars />
@@ -245,17 +250,19 @@ export default function PrayerGPT() {
         @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes countUp { from{opacity:0} to{opacity:1} }
         @keyframes halo { 0%,100%{text-shadow:0 0 30px rgba(168,130,255,0.4)} 50%{text-shadow:0 0 60px rgba(168,130,255,0.7), 0 0 90px rgba(168,130,255,0.3)} }
         textarea:focus,input:focus{outline:none;border-color:#a882ff !important}
-        .deity-btn:hover{transform:translateY(-2px);transition:transform 0.2s}
         .deity-btn{transition:all 0.2s}
-        .priority-btn:hover{transform:scale(1.03);transition:transform 0.2s}
+        .deity-btn:hover{transform:translateY(-2px)}
+        .deity-btn.selected{border-color:#a855f7 !important;background:rgba(168,130,255,0.15) !important;color:#e0d0ff !important;box-shadow:0 0 16px rgba(168,130,255,0.2)}
         .priority-btn{transition:all 0.2s}
+        .priority-btn:hover{transform:scale(1.03)}
         .nav-btn:hover{background:rgba(168,130,255,0.1) !important}
-        .transmit-btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}
         .transmit-btn{transition:all 0.2s}
+        .transmit-btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.1)}
         details summary::-webkit-details-marker { color: #a855f7; }
+        .show-more-btn{transition:all 0.2s}
+        .show-more-btn:hover{background:rgba(168,130,255,0.12) !important;color:#c8b0ff !important}
       `}</style>
 
       <div style={{ maxWidth: 580, margin: "0 auto", position: "relative", zIndex: 1 }}>
@@ -277,6 +284,7 @@ export default function PrayerGPT() {
           <div style={{
             fontSize: isMobile ? 12 : 13, color: "#7868a0", fontStyle: "italic",
             maxWidth: 380, margin: "0 auto 12px", lineHeight: 1.5,
+            padding: "0 10px",
           }}>
             "{tagline}"
           </div>
@@ -317,55 +325,80 @@ export default function PrayerGPT() {
             <span style={labelStyle}>Select Divine Endpoint</span>
             <div style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? 6 : 8,
-              marginBottom: 22,
+              gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr",
+              gap: 8,
+              marginBottom: 0,
             }}>
-              {DEITIES.map(function (d) {
+              {visibleDeities.map(function (d) {
                 var isSelected = deity === d.id;
                 return (
-                  <button key={d.id} className="deity-btn" onClick={function () { setDeity(d.id); }} style={{
+                  <button key={d.id} className={"deity-btn" + (isSelected ? " selected" : "")} onClick={function () { setDeity(d.id); }} style={{
                     background: isSelected ? "rgba(168,130,255,0.15)" : "rgba(255,255,255,0.03)",
                     border: "1px solid " + (isSelected ? "#a855f7" : "rgba(255,255,255,0.06)"),
-                    borderRadius: 10, padding: isMobile ? "12px 14px" : "12px 14px", textAlign: "left", cursor: "pointer",
+                    borderRadius: 10, padding: isMobile ? "10px" : "12px 14px", textAlign: "left", cursor: "pointer",
                     color: isSelected ? "#e0d0ff" : "#888", fontFamily: "inherit",
-                    display: "flex", alignItems: "center", gap: 12,
+                    position: "relative",
                     opacity: d.deprecated ? 0.5 : 1,
                   }}>
-                    <div style={{ fontSize: 24, flexShrink: 0 }}>{d.icon}</div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
-                        {d.name}
-                        {d.deprecated && (
-                          <span style={{ fontSize: 8, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
-                        )}
-                      </div>
-                      <div style={{ fontSize: 10, color: "#555", marginTop: 2 }}>{d.protocol}</div>
-                      <div style={{ fontSize: 9, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
-                        <span>Ping: {d.ping}</span>
-                        <span>Uptime: {d.uptime}</span>
-                      </div>
+                    {isSelected && (
+                      <div style={{
+                        position: "absolute", top: 6, right: 6,
+                        width: 18, height: 18, borderRadius: "50%",
+                        background: "#a855f7", display: "flex", alignItems: "center",
+                        justifyContent: "center", fontSize: 10, color: "#fff",
+                      }}>{"\u2713"}</div>
+                    )}
+                    <div style={{ fontSize: isMobile ? 22 : 24, marginBottom: 4 }}>{d.icon}</div>
+                    <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                      {d.name}
+                      {d.deprecated && (
+                        <span style={{ fontSize: 8, background: "rgba(239,68,68,0.2)", color: "#f87171", padding: "2px 5px", borderRadius: 3, textTransform: "uppercase", letterSpacing: 1 }}>EOL</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 10, color: "#555", marginTop: 2 }}>{d.protocol}</div>
+                    <div style={{ fontSize: 9, color: "#444", marginTop: 3, display: "flex", gap: 8 }}>
+                      <span>{d.ping}</span>
+                      <span>{d.uptime}</span>
                     </div>
                   </button>
                 );
               })}
             </div>
 
+            {/* Show more / less toggle on mobile */}
+            {isMobile && (
+              <button className="show-more-btn" onClick={() => setShowAllDeities(!showAllDeities)} style={{
+                width: "100%", marginTop: 8, marginBottom: 14, padding: "10px",
+                background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
+                borderRadius: 8, color: "#8878a8", fontSize: 11, letterSpacing: 2,
+                textTransform: "uppercase", cursor: "pointer", fontFamily: "inherit",
+              }}>
+                {showAllDeities ? "\u25B2 Show less" : "\u25BC " + hiddenCount + " more deities (incl. Zeus, somehow)"}
+              </button>
+            )}
+
+            {!isMobile && <div style={{ marginBottom: 22 }} />}
+
             {/* Selected deity info bar */}
             {selectedDeity && (
               <div style={{
                 background: "rgba(168,130,255,0.06)", border: "1px solid rgba(168,130,255,0.12)",
                 borderRadius: 8, padding: "10px 14px", marginBottom: 18,
-                fontSize: 11, color: "#8878a8", display: "flex", justifyContent: "space-between",
-                alignItems: "center", animation: "fadeIn 0.3s",
-                flexWrap: "wrap", gap: 6,
+                fontSize: 11, color: "#8878a8", animation: "fadeIn 0.3s",
               }}>
-                <span>Connected to <strong style={{ color: "#c8b0ff" }}>{selectedDeity.name}</strong></span>
-                <span style={{ fontSize: 10 }}>
-                  {selectedDeity.deprecated
-                    ? "\u26A0\uFE0F WARNING: This deity has been deprecated. Prayers may go to /dev/null."
-                    : "\u2713 Connection established via " + selectedDeity.protocol}
-                </span>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
+                  <span>Connected to <strong style={{ color: "#c8b0ff" }}>{selectedDeity.name}</strong></span>
+                  <span style={{ fontSize: 10 }}>
+                    {selectedDeity.deprecated
+                      ? "\u26A0\uFE0F Deprecated. Prayers may go to /dev/null."
+                      : "\u2713 " + selectedDeity.protocol}
+                  </span>
+                </div>
+                {selectedDeity.deprecated && (
+                  <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 6, fontStyle: "italic" }}>
+                    Last confirmed miracle: ~400 BCE. Proceed at your own theological risk.
+                  </div>
+                )}
               </div>
             )}
 
@@ -381,18 +414,23 @@ export default function PrayerGPT() {
             )}
 
             <span style={labelStyle}>Priority Level</span>
-            <div style={{ display: "flex", gap: 8, marginBottom: 22 }}>
+            <div style={{ display: "flex", gap: 8, marginBottom: 22, flexDirection: isMobile ? "column" : "row" }}>
               {PRIORITIES.map(function (p) {
+                var isActive = priority === p.id;
                 return (
                   <button key={p.id} className="priority-btn" onClick={function () { setPriority(p.id); }} style={{
-                    flex: 1, background: priority === p.id ? p.color + "22" : "rgba(255,255,255,0.03)",
-                    border: "1px solid " + (priority === p.id ? p.color : "rgba(255,255,255,0.06)"),
-                    borderRadius: 10, padding: isMobile ? "12px 6px" : "12px 10px", cursor: "pointer", textAlign: "center",
-                    fontFamily: "inherit", color: priority === p.id ? p.color : "#555",
+                    flex: 1, background: isActive ? p.color + "22" : "rgba(255,255,255,0.03)",
+                    border: "1px solid " + (isActive ? p.color : "rgba(255,255,255,0.06)"),
+                    borderRadius: 10, padding: isMobile ? "10px 14px" : "12px 10px", cursor: "pointer",
+                    fontFamily: "inherit", color: isActive ? p.color : "#555",
+                    display: isMobile ? "flex" : "block", alignItems: "center", gap: 12,
+                    textAlign: isMobile ? "left" : "center",
                   }}>
-                    <div style={{ fontSize: 18, marginBottom: 4 }}>{p.icon}</div>
-                    <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 600 }}>{p.label}</div>
-                    <div style={{ fontSize: isMobile ? 9 : 10, marginTop: 3, opacity: 0.7, lineHeight: 1.3 }}>{p.desc}</div>
+                    <div style={{ fontSize: 18, marginBottom: isMobile ? 0 : 4, flexShrink: 0 }}>{p.icon}</div>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{p.label}</div>
+                      <div style={{ fontSize: 10, marginTop: 2, opacity: 0.7, lineHeight: 1.3 }}>{p.desc}</div>
+                    </div>
                   </button>
                 );
               })}
@@ -402,7 +440,8 @@ export default function PrayerGPT() {
             <div style={{ fontSize: 10, color: "#555", marginBottom: 6, fontStyle: "italic" }}>
               One topic per line. Be specific — omniscience isn't what it used to be.
             </div>
-            <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }} rows={5}
+            <textarea value={topics} onChange={function (e) { setTopics(e.target.value); }}
+              rows={isMobile ? 4 : 5}
               placeholder={placeholder}
               style={{
                 width: "100%", background: "rgba(255,255,255,0.04)",
@@ -411,17 +450,20 @@ export default function PrayerGPT() {
                 fontFamily: "inherit", lineHeight: 1.6, resize: "vertical",
               }} />
 
-            <button className="transmit-btn" onClick={transmit} disabled={!deity || !topics.trim()} style={{
-              width: "100%", marginTop: 22, padding: isMobile ? "18px" : "16px",
-              background: (!deity || !topics.trim()) ? "rgba(255,255,255,0.04)" : "linear-gradient(135deg, #6b3fa0, #a855f7)",
-              border: "none", borderRadius: 12,
-              color: (!deity || !topics.trim()) ? "#555" : "#fff",
-              fontSize: isMobile ? 15 : 14, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase",
-              cursor: (!deity || !topics.trim()) ? "not-allowed" : "pointer", fontFamily: "inherit",
-              animation: (deity && topics.trim()) ? "glow 3s ease-in-out infinite" : "none",
-            }}>
-              {!deity ? "\uD83D\uDC46 Pick a deity first" : !topics.trim() ? "\u270D\uFE0F Enter your prayer topics" : "\u26A1 Transmit Prayer"}
-            </button>
+            {/* Desktop transmit button */}
+            {!isMobile && (
+              <button className="transmit-btn" onClick={transmit} disabled={!canTransmit} style={{
+                width: "100%", marginTop: 22, padding: "16px",
+                background: !canTransmit ? "rgba(255,255,255,0.04)" : "linear-gradient(135deg, #6b3fa0, #a855f7)",
+                border: "none", borderRadius: 12,
+                color: !canTransmit ? "#555" : "#fff",
+                fontSize: 14, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase",
+                cursor: !canTransmit ? "not-allowed" : "pointer", fontFamily: "inherit",
+                animation: canTransmit ? "glow 3s ease-in-out infinite" : "none",
+              }}>
+                {!deity ? "\uD83D\uDC46 Pick a deity first" : !topics.trim() ? "\u270D\uFE0F Enter your prayer topics" : "\u26A1 Transmit Prayer"}
+              </button>
+            )}
 
             {!deity && topics.trim() && (
               <div style={{ textAlign: "center", fontSize: 11, color: "#f59e0b", marginTop: 8, animation: "fadeIn 0.3s" }}>
@@ -524,7 +566,7 @@ export default function PrayerGPT() {
                 }}>
                   {finalStatus.icon} {finalStatus.label}
                 </span>
-                <div style={{ fontSize: 10, color: "#444", marginTop: 8, fontStyle: "italic" }}>
+                <div style={{ fontSize: 10, color: "#555", marginTop: 8, fontStyle: "italic" }}>
                   Estimated response time: between now and the heat death of the universe
                 </div>
               </div>
@@ -550,7 +592,7 @@ export default function PrayerGPT() {
               <div style={{ textAlign: "center", padding: isMobile ? 30 : 40, color: "#555" }}>
                 <div style={{ fontSize: 44, marginBottom: 14 }}>📡</div>
                 <div style={{ fontSize: 15, color: "#777", marginBottom: 4 }}>No transmissions yet</div>
-                <div style={{ fontSize: 12, color: "#444", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
+                <div style={{ fontSize: 12, color: "#555", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
                   Your prayer history will appear here.<br />
                   Think of it as a spiritual paper trail.
                 </div>
@@ -612,18 +654,40 @@ export default function PrayerGPT() {
 
         {/* FOOTER */}
         <div style={{
-          textAlign: "center", marginTop: 44, fontSize: 9, color: "#2a2440",
-          letterSpacing: 2, lineHeight: 2.2,
+          textAlign: "center", marginTop: 44, fontSize: 10, color: "#6b5f80",
+          letterSpacing: 2, lineHeight: 2.4,
         }}>
           PRAYERGPT v0.1 — DIVINE COMMUNICATION AS A SERVICE<br />
           99.9% SPIRITUAL UPTIME GUARANTEED*<br />
           NOT RESPONSIBLE FOR ANSWERS RECEIVED VIA "MYSTERIOUS WAYS"<br />
-          <span style={{ color: "#1e1a30" }}>
+          <span style={{ color: "#584d6e", fontStyle: "italic" }}>
             *guarantee not spiritually, legally, or existentially binding<br />
             if god is real, we're probably in trouble for this
           </span>
         </div>
       </div>
+
+      {/* MOBILE STICKY TRANSMIT BUTTON */}
+      {isMobile && screen === "home" && (
+        <div style={{
+          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 10,
+          padding: "12px 16px", paddingBottom: "max(12px, env(safe-area-inset-bottom))",
+          background: "linear-gradient(transparent, #0c0a18 30%)",
+        }}>
+          <button className="transmit-btn" onClick={transmit} disabled={!canTransmit} style={{
+            width: "100%", padding: "16px",
+            background: !canTransmit ? "rgba(40,30,60,0.95)" : "linear-gradient(135deg, #6b3fa0, #a855f7)",
+            border: !canTransmit ? "1px solid rgba(255,255,255,0.08)" : "none",
+            borderRadius: 12,
+            color: !canTransmit ? "#555" : "#fff",
+            fontSize: 15, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase",
+            cursor: !canTransmit ? "not-allowed" : "pointer", fontFamily: "inherit",
+            animation: canTransmit ? "glow 3s ease-in-out infinite" : "none",
+          }}>
+            {!deity ? "\uD83D\uDC46 Pick a deity" : !topics.trim() ? "\u270D\uFE0F Enter topics" : "\u26A1 Transmit Prayer"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
